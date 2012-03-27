@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Chico UI Todos</title>
+  <link rel="stylesheet" href="lib/chicoui-0.10.4.css"/>
+  <link rel="stylesheet" href="styles/todos.css"/>
+</head>
+
+<body>
+  <div id="todoapp" class="ch-box">
+    
+    <header>
+      <h1>Chico UI Todos</h1>
+      <input id="new-todo" type="text" placeholder="What needs to be done?">
+    </header>
+
+    <section id="main">
+      <input id="toggle-all" type="checkbox">
+      <label for="toggle-all">Mark all as complete</label>
+      <ul id="todo-list"></ul>
+    </section>
+
+    <footer>
+      <a id="clear-completed">Clear completed</a>
+      <div id="todo-count"></div>
+    </footer>
+    
+  </div>
+  
+  <div id="instructions">
+    Double-click to edit a todo.
+  </div>
+  
+  <div id="credits">
+    Created by <a href="http://www.natansantolo.com.ar">Natan Santolo</a>.
+    <br />Based on <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a> <a href="http://documentcloud.github.com/backbone/examples/todos/index.html">Backbone Todos</a>.
+  </div>
+
+  <script src="lib/jquery-1.7.1.js"></script>
+  <script src="lib/chicoui-0.10.4.js"></script>
+  <script src="scripts/todos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+#todoapp, #credits, #instructions {
+	margin: 20px auto;
+	width: 60%;
+}
+
+#credits, #instructions {
+	text-align: center;
+}
+
+
+.done {
+	text-decoration: line-through;
+}
+
+.todo-item {
+	display: block;
+	position: relative;
+	margin: 5px;
+	padding: 10px;
+	border-top: 1px solid #eee;
+}
+
+.remove {
+	position: absolute;
+	visibility: hidden;
+	right: 10px;
+}
+
+.todo-item:hover .remove {
+	visibility: visible;
+}
+
+
+.item-edit {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.editing .item-edit {
+	display: block;
+}
+
+.item-edit input {
+	display: block;
+	width: 99%;
+	height: 60%;
+	font-size: 14px;
+	text-indent: 14px;
+}
