@@ -146,6 +146,8 @@
 
 		self.$el.html( this.template.replace("%%value%%", self.value) ).blink();
 
+		self.completed && self.markAsDone() || self.unmarkAsDone();
+
 		self.addHandlers();
 
 		return self;	
@@ -207,7 +209,7 @@
 
 		var self = this;
 
-			self.$el.addClass('editing')
+			self.$el.removeClass('done').addClass('editing')
 				.find('.item-edit input').val( self.value ).focus()[0].select();
 
 		ch.utils.document.bind(ch.events.KEY.ENTER, function (event) { 
