@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ = w.$, ch = w.ch;
+	var $ = w.$, ch = w.ch, app;
 
 
 	/*
@@ -19,43 +19,98 @@
 
 		self.$input = $('#new-todo');
 
-		ch.utils.document.bind(ch.events.KEY.ENTER, function (x, event) { 
-			event.stopPropagation();
-			self.addNewTodo(event); 
+		self.todoCounter = $('#todo-count');
+
+		self.clearCompleted = $('#clear-completed');
+
+		self.clearCompleted.on('click', function(event) {
+
+			self.clearCompletedHandler(event);
+
 		});
 
-		self.addNewTodo = function(event) {
+		self.toggleAll = $('#toggle-all');
 
-			var $target = $(event.target);
+		self.toggleAll.on('change', function(event) {
 
-			if ( self.$input[0] === $target[0] ) {
+			self.toggleAllHandler(event);
 
-				var value = $target.val();
+		});
 
-				if (value) {
+		ch.utils.document.on(ch.events.KEY.ENTER, function(event) { 
 
-					todos.add(new Todo(value));
+			self.addNewTodo(event);
 
-					self.updateCounter();
-
-					$target.val('');
-	
-				}
-
-			}
-
-		};
-
-
-		self.updateCounter = function() {
-
-			$('#todo-count').html( todos.size() );
-
-		};
+		});
+		
+		return self;
 
 	};
 
-	TodoApp.clearCompleted = function() {};
+	TodoApp.prototype.addNewTodo = function(event) {
+
+		event.stopPropagation();
+
+		var self = this;
+
+		var value = self.$input.val();
+
+		if (value !== "") {
+
+			todos.add(new Todo(value));
+
+			self.updateCounter();
+
+			self.$input.val('');
+	
+		}
+	};
+
+	TodoApp.prototype.toggleAllHandler = function(event) {
+
+		event.stopPropagation();
+
+		var self = this;
+
+		var action = self.toggleAll.attr('checked') ? 'markAsDone' : 'unmarkAsDone';
+
+		$(todos.children).each(function(i, todo) { todo[action](); });
+
+	};
+
+	TodoApp.prototype.updateCounter = function() {
+
+		var self = this;
+
+		var itemsLeft = 0, itemsCompleted = 0;
+
+		$(todos.children).each(function(i, todo) { 
+
+			todo.completed ? itemsCompleted++ :	itemsLeft++;
+
+		});
+
+		self.todoCounter.html( itemsLeft + ' items left' );
+
+		self.clearCompleted.html( 'Clear ' + itemsCompleted + ' completed items' );
+
+	};
+
+	TodoApp.prototype.clearCompletedHandler = function(event) {
+
+		event.stopPropagation();
+
+		var self = this;
+
+		$(todos.children).each(function(i, todo) { 
+
+			todo.completed && todo.remove();
+
+		});
+
+		self.updateCounter();
+
+	};
 
 	/*
 	 * @class Todo
@@ -63,21 +118,23 @@
 
 	var Todo = function(value) {
 
-		this.value = value;
+		var self = this;
 
-		this.completed = false;
+		self.value = value;
 
-		this.template = '<input type="checkbox"> %%value%%<span class="remove ch-ico-error">remove</span><div class="item-edit"><input type="text"></div>';
+		self.completed = false;
 
-		this.$container = $('#todo-list');
+		self.template = '<input type="checkbox"> %%value%%<span class="remove ch-ico-error">remove</span><div class="item-edit"><input type="text"></div>';
 
-		this.$el = $('<li class="todo-item"></li>');
+		self.$container = $('#todo-list');
 
-		this.$container.append( this.$el );
+		self.$el = $('<li class="todo-item"></li>');
 
-		this.render();
+		self.$container.append( self.$el );
 
-		return this;
+		self.render();
+
+		return self;
 
 	}
 
@@ -122,7 +179,9 @@
 
 		self.completed = true;
 
-		self.$el.addClass('done');
+		self.$el.addClass('done').find('input[type=checkbox]').attr('checked','checked');
+
+		app.updateCounter();
 
 		return self;
 
@@ -134,7 +193,9 @@
 
 		self.completed = false;
 
-		self.$el.removeClass('done');
+		self.$el.removeClass('done').find('input[type=checkbox]').removeAttr('checked');
+
+		app.updateCounter();
 
 		return self;
 
@@ -144,7 +205,8 @@
 
 		var self = this;
 
-			self.$el.addClass('editing').find('.item-edit input').val( self.value ).focus();
+			self.$el.addClass('editing')
+				.find('.item-edit input').val( self.value ).focus()[0].select();
 
 		ch.utils.document.bind(ch.events.KEY.ENTER, function (event) { 
 			event.stopPropagation();
@@ -174,11 +236,13 @@
 
 		var self = this;
 
-			if ( !self.$el.find('.item-edit input').val() ) {
+		var value = self.$el.find('.item-edit input').val();
+
+			if ( !value ) {
 				return;
 			}
 
-			self.value = self.$el.find('.item-edit input').val(); 
+			self.value = value; 
 
 			self.exitEditMode();
 
@@ -191,9 +255,14 @@
 		var self = this;
 
 			self.$el.unbind('dblclick').detach();
+
+			todos.rem(this);
+
+			app.updateCounter();
+
 	}
 
 	// Start App
-	new TodoApp();
+	app = new TodoApp();
 
 }(window));

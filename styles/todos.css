@@ -1,28 +1,59 @@
+body {
+	color: #333;
+	background-color: #eee;
+}
+
+header {
+	margin: 10px;
+	text-align: center;
+}
+
 #todoapp, #credits, #instructions {
+	position: relative;
 	margin: 20px auto;
 	width: 60%;
+	overflow: hidden;
 }
 
 #credits, #instructions {
 	text-align: center;
 }
 
+#new-todo {
+	display: block;
+	position: absolute;
+	padding: 10px;
+	right: 10px;
+	left: 10px;
+}
+
+#main {
+	opacity: .7;
+	margin-top: 50px;
+}
 
 .done {
 	text-decoration: line-through;
+	color: #666;
 }
 
 .todo-item {
 	display: block;
 	position: relative;
 	margin: 5px;
-	padding: 10px;
+	padding: 10px 10px 5px;
 	border-top: 1px solid #eee;
+	font-size: 16px;
+}
+
+.todo-item:hover {
+	color: #000;
 }
 
 .remove {
 	position: absolute;
 	visibility: hidden;
+	cursor: pointer;
 	right: 10px;
 }
 
@@ -46,8 +77,26 @@
 
 .item-edit input {
 	display: block;
+	margin: 0;
 	width: 99%;
-	height: 60%;
-	font-size: 14px;
-	text-indent: 14px;
+	height: 80%;
+	font-size: 16px;
+	text-indent: 20px;
+}
+
+footer {
+	margin: 20px -10px -10px -10px;
+	padding: 10px;
+	background-color: #eee;
+	border-top: 1px solid #ccc;
+}
+
+#clear-completed, #clear-completed:visited, #clear-completed:active {
+	position: absolute;
+	right: 10px;
+	cursor: pointer;
+}
+
+#clear-completed:hover {
+	text-decoration: none;
 }
