@@ -19,6 +19,8 @@
 
 		self.$input = $('#new-todo');
 
+		self.$input.countdown(140);
+
 		self.todoCounter = $('#todo-count');
 
 		self.clearCompleted = $('#clear-completed');
@@ -42,7 +44,7 @@
 			self.addNewTodo(event);
 
 		});
-		
+
 		return self;
 
 	};

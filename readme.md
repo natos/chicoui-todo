@@ -1,4 +1,22 @@
-Chico UI TO-DO example app
-==========================
+TO-DO example app
+=================
 
-http://www.chico-ui.com.ar
+Online demo
+-----------
+
+http://natos.github.com/chicoui-todo/
+
+Builded with
+------------
+
+ * jQuery http://www.jquery.com
+ * Chico UI http://www.chico-ui.com.ar
+
+Chico UI features
+-----------------
+
+ * List Class
+ * Blink Widget
+ * Countdown Widget
+ * Keyboard Events
+ * CSS Library
