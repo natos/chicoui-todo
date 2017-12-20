@@ -10,7 +10,7 @@ Builded with
 ------------
 
  * jQuery http://www.jquery.com
- * Chico UI http://www.chico-ui.com.ar
+ * Chico UI http://chico.mercadolibre.com/
 
 Chico UI features
 -----------------
